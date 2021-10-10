@@ -17,10 +17,14 @@ There are 4 primitive types in JSON:
 * `string`
 * `null`
 * `undefined`
+
 and 2 complex types:
 * `Array` 
 * `Object`. 
-We also allow another type only for use by validation functions in schemas: `function`. In this writeup, "type" always means a primitive type
+
+We also allow another type only for use by validation functions in schemas: `function`. 
+
+In this writeup, "type" always means a primitive type
 or complex type, by this definition. You can forget about all other Javascript
 and Typescript ideas of "type" for the purposes of this library.
 
