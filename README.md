@@ -1,6 +1,6 @@
 # matches_json_schema
 
-Version 1.2 (October 2021).
+Version 2.0 (October 2021).
 
 Downstream from [https://gitlab.com/jane314/matches_json_schema](https://gitlab.com/jane314/matches_json_schema).
 
@@ -12,13 +12,23 @@ not `obj` matches the provided `schema`.
 
 Schema validation happens as follows.
 
-There are 4 primitive types, `number`, `string`, `null`, and `undefined`, and 2
-complex types, `Array` and `Object`. Here, "type" always means a primitive type
+There are 4 primitive types in JSON:
+* `number`
+* `string`
+* `null`
+* `undefined`
+and 2 complex types:
+* `Array` 
+* `Object`. 
+We also allow another type only for use by validation functions in schemas: `function`. In this writeup, "type" always means a primitive type
 or complex type, by this definition. You can forget about all other Javascript
 and Typescript ideas of "type" for the purposes of this library.
 
-From this, validation is defined recursively as:
+What `matches_json_schema` does is check that an object has the same type structure as a reference `schema` object, and (new in version 2.0!) check that certain tree nodes satisfy a validation function.
 
+Validation is defined recursively as:
+
+- If `schema` is type `function`, then `obj` matches `schema` if and only if `schema(obj)` is true.
 - If `schema` and `obj` are both primitive types, then `obj` matches `schema` if
   and only if `schema` and `obj` are the same primitive type.
 - If `schema` and `obj` are both complex types, then:
@@ -30,7 +40,7 @@ From this, validation is defined recursively as:
 
 So, for Arrays, we can check that every element in the Array is of a certain
 type. For Objects, we check that certain keys are present and associated with
-certain types. Extra keys are fine.
+certain types. Extra keys are fine. And if a node in a schema is `function` type, we check that the corresponding node in the object passes that validation function.
 
 ## Examples
 
@@ -38,7 +48,7 @@ certain types. Extra keys are fine.
 import {
   matches_json_schema,
   matches_obj_schema,
-} from "https://deno.land/x/matches_json_schema/matches_json_schema.js";
+} from "../matches_json_schema.js";
 
 let schema_json = `
 {
@@ -70,6 +80,19 @@ let schema = [0];
 
 // Matching Object
 obj = [2, 3, 5, 7, 11, 13];
+
+console.log(matches_obj_schema(schema, obj)); // Prints true
+
+// Schema
+schema = {
+	name: '',
+	date: str => (new Date(str)).toString() !== 'Invalid Date'
+}
+
+obj = {
+	name: 'Janie',
+	date: 'oct 10, 2021 11:44 AM UTC-5'
+};
 
 console.log(matches_obj_schema(schema, obj)); // Prints true
 ```
