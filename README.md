@@ -1,6 +1,6 @@
 # matches_json_schema
 
-Version 1.1 (October 2021).
+Version 1.2 (October 2021).
 
 Downstream from [https://gitlab.com/jane314/matches_json_schema](https://gitlab.com/jane314/matches_json_schema).
 
@@ -38,7 +38,7 @@ certain types. Extra keys are fine.
 import {
   matches_json_schema,
   matches_obj_schema,
-} from "./matches_json_schema.js";
+} from "https://deno.land/x/matches_json_schema/matches_json_schema.js";
 
 let schema_json = `
 {
@@ -79,7 +79,7 @@ console.log(matches_obj_schema(schema, obj)); // Prints true
 Example with [Deno](https://deno.land/)!
 
 ```javascript
-import { matches_json_schema } from "https://deno.land/x/matches_json_schema@1.0/matches_json_schema.js";
+import { matches_json_schema } from "https://deno.land/x/matches_json_schema/matches_json_schema.js";
 
 console.log(matches_json_schema("null", null)); // Prints true
 ```
@@ -87,6 +87,5 @@ console.log(matches_json_schema("null", null)); // Prints true
 ## Links
 
 * Deno Library: [https://deno.land/x/matches_json_schema](https://deno.land/x/matches_json_schema).
-* Downstream Github Repo: [https://gitlab.com/jane314/matches_json_schema](https://gitlab.com/jane314/matches_json_schema).
 
 

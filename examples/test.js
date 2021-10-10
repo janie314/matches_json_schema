@@ -1,7 +1,7 @@
 import {
   matches_json_schema,
   matches_obj_schema,
-} from "../matches_json_schema.js";
+} from "https://deno.land/x/matches_json_schema/matches_json_schema.js";
 
 let schema_json = `
 {
